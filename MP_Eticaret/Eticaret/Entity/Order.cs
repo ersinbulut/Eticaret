@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -38,8 +39,7 @@ namespace Eticaret.Entity
         //public string UserID { get; set; }
         //public Users User { get; set; }
         public int UserAddressID { get; set; }
-        //public Addres UserAddress { get; set; }
-
+        [ForeignKey("UserAddressID")]
         public virtual Addres Addres { get; set; }
 
         public virtual List<Product> Products { get; set; }
