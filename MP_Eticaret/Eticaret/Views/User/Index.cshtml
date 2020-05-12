@@ -36,6 +36,11 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.Email)
                             </td>
+                            <td>
+                                @*<a asp-action="RolAta" asp-controller="User" asp-route-
+                                   kullaniciId="@item.Id" class="btn btn-primary">Rol ata</a>*@
+                                @Html.ActionLink("Rol Ata", "RolAta", new { kullaniciId = item.Id }) |
+                            </td>
                         </tr>
                         }
                     </tbody>

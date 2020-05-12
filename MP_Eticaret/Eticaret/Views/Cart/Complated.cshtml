@@ -1,4 +1,6 @@
-﻿
+﻿@using Eticaret.Models
+@model IEnumerable<UserOrderModel>
+
 @{
     ViewBag.Title = "Complated";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,73 +22,82 @@
             <div class="span9">
                 <div class="alert alert-success">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Başarılı!</strong> Satın aldığınız ürünler en kısa zamanda kargoya verilecektir.
+                    <strong>Siparişiniz Alındı!</strong> Satın aldığınız ürünler en kısa zamanda kargoya verilecektir.
                 </div>
-                <p>Güncel siparişleri görmek için <a href="/Account/Index">Tıklayın</a></p>
+                @*<p>Güncel siparişleri görmek için <a href="/Account/Index">Tıklayın</a></p>*@
+
+
+
+                @foreach (var item in Model.OrderByDescending(x=>x.OrderDate).Take(1))
+                {
+                   <h1>Sipariş Numarası:  @item.OrderNumber</h1>
+                   @Html.ActionLink("Sipariş Bilgilerini Gör", "Details", new { id = @item.Id }, new { @class = "text-primary" })
+                }
+
 
 
                 @*<h2>
-                    @Model.Id Nolu Siparişinizin Durumu :
-                    @if (Model.OrderState == Eticaret.Entity.EnumOrderState.Bekleniyor)
-                    {
-                        <a class="btn btn-danger">Sipariş bekleniyor</a>
-                    }
-                    else if (Model.OrderState == Eticaret.Entity.EnumOrderState.Tamamlandı)
-                    {
-                        <a class="btn btn-success">Sipariş tamamlandı</a>
-                    }
-                    else if (Model.OrderState == Eticaret.Entity.EnumOrderState.Paketlendi)
-                    {
-                        <a class="btn btn-info">Sipariş paketlendi</a>
-                    }
-                    else if (Model.OrderState == Eticaret.Entity.EnumOrderState.Kargolandı)
-                    {
-                        <a class="btn btn-primary">Sipariş kargoya verildi</a>
-                    }
-                </h2>
-                <hr />
-                <b>Banka Bilgileri</b>
-                <table>
-                    <tr>
-                        <td>Banka</td>
-                        <td>Banka İsmi</td>
-                    </tr>
-                    <tr>
-                        <td>İban</td>
-                        <td>TR54121541245416</td>
-                    </tr>
-                    <tr>
-                        <td>Alıcı Adı</td>
-                        <td>Firma Bilgileri</td>
-                    </tr>
-                </table>
+            @Model.Id Nolu Siparişinizin Durumu :
+            @if (Model.OrderState == Eticaret.Entity.EnumOrderState.Bekleniyor)
+            {
+                <a class="btn btn-danger">Sipariş bekleniyor</a>
+            }
+            else if (Model.OrderState == Eticaret.Entity.EnumOrderState.Tamamlandı)
+            {
+                <a class="btn btn-success">Sipariş tamamlandı</a>
+            }
+            else if (Model.OrderState == Eticaret.Entity.EnumOrderState.Paketlendi)
+            {
+                <a class="btn btn-info">Sipariş paketlendi</a>
+            }
+            else if (Model.OrderState == Eticaret.Entity.EnumOrderState.Kargolandı)
+            {
+                <a class="btn btn-primary">Sipariş kargoya verildi</a>
+            }
+        </h2>
+        <hr />
+        <b>Banka Bilgileri</b>
+        <table>
+            <tr>
+                <td>Banka</td>
+                <td>Banka İsmi</td>
+            </tr>
+            <tr>
+                <td>İban</td>
+                <td>TR54121541245416</td>
+            </tr>
+            <tr>
+                <td>Alıcı Adı</td>
+                <td>Firma Bilgileri</td>
+            </tr>
+        </table>
 
-                <hr />
-                <b>Sipariş Bilgileri</b>
-                <table>
-                    <tr>
-                        <td>Toplam</td>
-                        <td>@Model.Total.ToString("##,## ₺")</td>
-                    </tr>
-                </table>
-                <hr />
-                <b>Ürünler</b>
-                <table>
-                    <tr>
-                        <th>Ürün</th>
-                        <th>Adet</th>
-                    </tr>
-                    @{
-                        foreach (var item in Model.OrderLines)
-                        {
+        <hr />
+        <b>Sipariş Bilgileri</b>
+        <table>
+            <tr>
+                <td>Toplam</td>
+                <td>@Model.Total.ToString("##,## ₺")</td>
+            </tr>
+        </table>
+        <hr />
+        <b>Ürünler</b>
+        <table>
+            <tr>
+                <th>Ürün</th>
+                <th>Adet</th>
+            </tr>
+            @{
+                foreach (var item in Model.OrderLines)
+                {
 
-                            <tr>
+                    <tr>
 
-                                <td>@item.Quantity</td>
-                            </tr>
-                        }
-                    }
-                </table>*@
+                        <td>@item.Quantity</td>
+                    </tr>
+                }
+            }
+        </table>*@
 
             </div>
 

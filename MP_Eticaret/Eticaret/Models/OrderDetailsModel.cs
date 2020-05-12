@@ -24,6 +24,11 @@ namespace Eticaret.Models
         public string Mahalle { get; set; }
         public string PostaKodu { get; set; }
 
+        public int UserAddressID { get; set; }
+        public virtual Addres UserAddress { get; set; }
+
+        //public virtual List<Addres> Addres { get; set; }
+
         //*//*/
 
         [Required(ErrorMessage = "Lütfen Kart Numarası Giriniz..")]

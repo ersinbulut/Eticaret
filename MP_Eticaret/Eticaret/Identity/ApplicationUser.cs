@@ -15,6 +15,8 @@ namespace Eticaret.Identity
         public string Surname { get; set; }
         public string Image { get; set; }
 
+        public string ActivationCode { get; set; }//aktivasyon kodu
+
         /*Yeni Eklenen Alanlar*/
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]

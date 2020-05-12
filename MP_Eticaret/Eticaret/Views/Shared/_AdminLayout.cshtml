@@ -42,11 +42,10 @@
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         <!-- Messages: style can be found in dropdown.less-->
-                  
                         <!-- Notifications: style can be found in dropdown.less -->
-                     @Html.Action("BildirimMenusu","Partial")
+                        @Html.Action("BildirimMenusu", "Partial")
+                        @Html.Action("YorumMenusu", "Partial")
                         <!-- Tasks: style can be found in dropdown.less -->
-                     
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -64,16 +63,16 @@
                                 </li>
                                 <!-- Menu Body -->
                                 @*<li class="user-body">
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Followers</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Sales</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Friends</a>
-                                    </div>
-                                </li>*@
+                    <div class="col-xs-4 text-center">
+                        <a href="#">Followers</a>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                        <a href="#">Sales</a>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                        <a href="#">Friends</a>
+                    </div>
+                </li>*@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-right">
@@ -144,6 +143,16 @@
                         <ul class="treeview-menu">
                             <li><a href="/Product/Create"><i class="fa fa-circle-o"></i> Ürün Ekle</a></li>
                             <li><a href="/Product/Index"><i class="fa fa-circle-o"></i> Ürün İşlemleri</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-envelope"></i> <span>Yorum</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="/Comment/OnayliYorum"><i class="fa fa-circle-o"></i> Onaylı Yorumlar</a></li>
+                            <li><a href="/Comment/OnaysizYorum"><i class="fa fa-circle-o"></i> Onaysız Yorumlar</a></li>
                         </ul>
                     </li>
 

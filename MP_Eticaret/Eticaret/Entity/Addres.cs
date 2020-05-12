@@ -26,5 +26,11 @@ namespace Eticaret.Entity
         [Required(ErrorMessage = "Lütfen Posta Kodu Giriniz..")]
         public string PostaKodu { get; set; }
 
+        //public virtual Order Order { get; set; }
+
+        //public virtual List<OrderDetailsModel> OrderDetailsModel { get; set; }
+
+
+
     }
 }

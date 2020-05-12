@@ -35,9 +35,16 @@ namespace Eticaret.Controllers
         {
             return PartialView(db.Products.Where(x=>x.IsFeatured && x.IsApproved).Take(3).ToList());
         }
-        public ActionResult ProductList(int id)
+        public ActionResult ProductList(int categoryId, int subCategoryId)
         {
-            return View(db.Products.Where(i => i.CategoryId == id).ToList());
+            var query = db.Products.AsQueryable();
+
+            if (categoryId > 0)
+                query = query.Where(i => i.CategoryId == subCategoryId);
+            else
+                query = query.Where(i => i.Category.ParentId == subCategoryId);
+
+            return View(query.ToList());
         }
         //public ActionResult ProductList1(int id)
         //{
@@ -70,6 +77,33 @@ namespace Eticaret.Controllers
             }
            ).ToList();
             return View(urun);
+        }
+        public ActionResult Comment()
+        {
+            Comments yorum = new Comments();
+            return View(yorum);
+        }
+        [HttpPost]
+        public void Comment(Comments comment)
+        {
+            if (ModelState.IsValid)
+            {
+                comment.AddedDate = DateTime.Now;
+                db.Comments.Add(comment);
+                db.SaveChanges();
+                //return RedirectToAction("MesajGoster");
+            }
+            //return View();
+        }
+        public JavaScriptResult MesajGoster()
+        {
+            string msg = "<script> alert('Yorumunuz yöneticinin onayına gönderildi en kısa zamanda yayınlanacak..'); </script>";
+            return JavaScript(msg);
+        }
+
+        public ActionResult Contact()
+        {
+            return View();
         }
     }
 }

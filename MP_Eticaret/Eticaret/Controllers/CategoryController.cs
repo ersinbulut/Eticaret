@@ -19,7 +19,7 @@ namespace Eticaret.Controllers
         [Authorize(Roles ="admin")]//sadece rolu admin olanlar bu sayfaya gidebilir
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            return View(db.Categories.ToList().OrderByDescending(x=>x.Id));
         }
         public PartialViewResult _CategoryList()
         {

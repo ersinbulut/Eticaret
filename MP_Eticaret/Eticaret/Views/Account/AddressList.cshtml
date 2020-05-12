@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Eticaret.Entity.Addres>
+@{
+    ViewBag.Title = "AddressList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="mainBody">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar ================================================== -->
+            <div id="sidebar" class="span3">
+                @Html.Action("Summary", "Cart")
+                <ul id="sideManu" class="nav nav-tabs nav-stacked">
+                    @Html.Action("_CategoryList", "Category")
+                </ul>
+                <br />
+                @Html.Action("FeaturedProductList", "Home")
+            </div>
+            <!-- Sidebar end=============================================== -->
+            <div class="span9">
+
+
+                <h2>Adres Listeniz</h2>
+
+                <p>
+                    @Html.ActionLink("Yeni Adres Ekle", "CreateUserAddress")
+                </p>
+                <table class="table table-hover">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AdresBasligi)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Adres)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Il)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Ilce)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mahalle)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PostaKodu)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AdresBasligi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Adres)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Il)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Ilce)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Mahalle)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PostaKodu)
+                            </td>
+                            <td>
+                                <a href="/Cart/DeleteUserAddress/@item.Id" class="btn btn-danger">Adresi Sil</a>
+
+                                @*<a href="/Cart/CreateOrder/@item.Id" class="btn btn-success">Alışverişi Tamamla <i class="icon-arrow-right"></i></a>*@
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>

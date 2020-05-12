@@ -62,7 +62,7 @@
                         </tr>
                         <tr>
                             <td>Tarih</td>
-                            <td>@Model.OrderDate</td>
+                            <td>@Model.OrderDate.ToString("dd.MM.yyyy")</td>
                         </tr>
                         <tr>
                             <td>Adres</td>
@@ -77,34 +77,7 @@
                     </tbody>
                 </table>
                 <h1>Ödeme Bilgileri</h1>
-                <table id="compairTbl" class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <td>Ödenen Tutar (₺)</td>
-                            <td>@Model.Total</td>
-                        </tr>
-                        <tr>
-                            <td>Ödeme Tarihi</td>
-                            <td>@Model.OrderDate</td>
-                        </tr>
-                        <tr>
-                            <td>Kart Numarası</td>
-                            <td>@Model.CartNumber</td>
-                        </tr>
-                        <tr>
-                            <td>Güvenlik Numarası</td>
-                            <td>@Model.SecurityNumber</td>
-                        </tr>
-                        <tr>
-                            <td>Kart Sahibi</td>
-                            <td>@Model.CartHasName</td>
-                        </tr>
-                        <tr>
-                            <td>Son Kullanma Tarihi</td>
-                            <td>@Model.ExpMonth / @Model.ExpYear </td>
-                        </tr>
-
-                </table>
+              
 
                 <table id="compairTbl" class="table table-bordered">
                     <thead>

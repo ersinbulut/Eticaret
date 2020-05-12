@@ -12,7 +12,6 @@ namespace Eticaret.Entity
         public string Description { get; set; }
         public virtual List<Product> Products { get; set; }
         public int ParentId { get; set; }
-     
-
+        //public List<Category> SubCategories { get; internal set; }
     }
 }

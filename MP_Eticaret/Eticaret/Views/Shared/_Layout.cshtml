@@ -55,7 +55,7 @@
                     <span class="icon-bar"></span>
                 </a>
                 <div class="navbar-inner">
-                    <a class="brand" href="/Home/Index"><img src="/Magaza/themes/images/logo.png" alt="Bootsshop" /></a>
+                    <a class="brand" href="/Home/Index"><img src="/Magaza/themes/images/logo.png" alt="Arel Üniversitesi" />Arel Üniversitesi</a>
 
                     @Html.Partial("Arama")
 
@@ -71,27 +71,27 @@
     <div id="footerSection">
         <div class="container">
             <div class="row">
-                <div class="span3">
+                @*<div class="span3">
                     <h5>HESAP</h5>
                     <a href="login.html">HESAP</a>
                     <a href="login.html">KİŞİSEL BİLGİLERİNİZ</a>
                     <a href="login.html">İNDİRİM</a>
                     <a href="login.html">SİPARİŞ</a>
                     <a href="login.html">GEÇMİŞ ADRESLER</a>
-                </div>
+                </div>*@
                 <div class="span3">
                     <h5>BİLGİ</h5>
-                    <a href="contact.html">İLETİŞİM</a>
-                    <a href="register.html">KAYIT</a>
+                    <a href="~/Home/Contact">İLETİŞİM</a>
+                    <a href="~/Account/Register">KAYIT</a>
                     <a href="legal_notice.html">YASAL UYARI</a>
                     <a href="tac.html">ŞARTLARI VE KOŞULLARI</a>
                     <a href="faq.html">SSS</a>
                 </div>
                 <div class="span3">
                     <h5>BİZİM TEKLİFLERİMİZ</h5>
-                    <a href="#">YENİ ÜRÜNLER</a>
-                    <a href="#">EN ÇOK SATANLAR</a>
-                    <a href="special_offer.html">ÖZEL TEKLİFLER</a>
+                    <a href="~/Home/Product">YENİ ÜRÜNLER</a>
+                    <a href="~/Home/Product">EN ÇOK SATANLAR</a>
+                    <a href="~/Home/Product">ÖZEL TEKLİFLER</a>
                     <a href="#">ÜRETİCİ</a>
                     <a href="#">TEDARİKÇİLERİ</a>
                 </div>

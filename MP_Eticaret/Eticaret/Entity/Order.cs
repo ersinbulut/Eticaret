@@ -35,10 +35,14 @@ namespace Eticaret.Entity
         //*//*/
         public virtual List<OrderLine> OrderLines { get; set; }
 
-        public string UserID { get; set; }
+        //public string UserID { get; set; }
         //public Users User { get; set; }
-        //public int UserAddressID { get; set; }
+        public int UserAddressID { get; set; }
         //public Addres UserAddress { get; set; }
+
+        public virtual Addres Addres { get; set; }
+
+        public virtual List<Product> Products { get; set; }
     }
     public class OrderLine
     {
@@ -48,6 +52,7 @@ namespace Eticaret.Entity
         public int Quantity { get; set; }
         public double Price { get; set; }
         public int ProductId { get; set; }
+        public int Stock { get; set; }
         public virtual Product Product { get; set; }
     }
 }

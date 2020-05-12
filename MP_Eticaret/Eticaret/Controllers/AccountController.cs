@@ -1,4 +1,5 @@
 ﻿using Eticaret.Entity;
+using Eticaret.Helpers;
 using Eticaret.Identity;
 using Eticaret.Models;
 using Eticaret.Services.Senders;
@@ -8,6 +9,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -59,12 +61,13 @@ namespace Eticaret.Controllers
                 Total=i.Total,
                 OrderDate=i.OrderDate,
                 OrderState=i.OrderState,
-                AdresBasligi=i.AdresBasligi,
-                Adres=i.Adres,
-                Il=i.Il,
-                Ilce=i.Ilce,
-                Mahalle=i.Mahalle,
-                PostaKodu=i.PostaKodu,
+                AdresBasligi = i.AdresBasligi,
+                Adres = i.Adres,
+                Il = i.Il,
+                Ilce = i.Ilce,
+                Mahalle = i.Mahalle,
+                PostaKodu = i.PostaKodu,
+                UserAddressID =i.UserAddressID,
                 /*kart bilgileri*/
                 CartNumber=i.CartNumber,
                 SecurityNumber=i.SecurityNumber,
@@ -97,20 +100,26 @@ namespace Eticaret.Controllers
                 user.UserName = model.Username;
                 user.DateOfBirth = model.DateOfBirth;
                 user.Gender = model.Gender;
+                user.ActivationCode = StringHelpers.GetCode();
 
                 var result = UserManager.Create(user, model.Password);
 
                 if (result.Succeeded)
                 {
+                    string SiteUrl = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
+                        (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+
                     //mail gönder
                     var emailService = new EmailService();
-                    var body = $"Merhaba <b>{user.Name}  {user.Surname}</b> <br/> <p>Web sitemize üye Olduğun için teşekkür ederiz.</p>";
+                    var body = $"Merhaba <b>{user.Name}  {user.Surname}</b> <br/> Hesabınızı aktif etmek için aşağıdaki linke tıklayınız" +
+                        $"<br/><a href='{SiteUrl}/Account/Activation?code={user.ActivationCode}'>Aktivasyon Linki</a>";
                     await emailService.SendAsync(new IdentityMessage() { Body = body, Subject = "Sitemize Hoşgeldiniz" }, user.Email);
 
                     if (RoleManager.RoleExists("user"))
                     {
                         UserManager.AddToRole(user.Id, "user");
                     }
+                   
                     return RedirectToAction("Login", "Account");
                    
                 }
@@ -228,6 +237,21 @@ namespace Eticaret.Controllers
             user.CartHasName = model.UserProfileViewModel.CartHasName;
             user.ExpYear = model.UserProfileViewModel.ExpYear;
             user.ExpMonth = model.UserProfileViewModel.ExpMonth;
+
+            if (Request.Files != null && Request.Files.Count > 0)
+            {
+                var file = Request.Files[0];
+                if (file.ContentLength > 0)
+                {
+                    var folder = Server.MapPath("~/Content/Images");
+                    var fileName = Guid.NewGuid() + ".jpg";
+                    file.SaveAs(Path.Combine(folder, fileName));
+
+                    var filePath = "Content/Images/" + fileName;
+                    user.Image = filePath;
+                    user.Image = model.UserProfileViewModel.ProfileImageName;
+                }
+            }
             /**/
 
             await userManager.UpdateAsync(user);
@@ -268,7 +292,7 @@ namespace Eticaret.Controllers
             {//mail gönder
                 var emailService = new EmailService();
                 var body = $"Merhaba <b>{user.Name}  {user.Surname}</b> <br/> <p>Hesabınızın şifresi güncellenmiştir.</p>";
-                await emailService.SendAsync(new IdentityMessage() { Body = body, Subject = "Sitemize Hoşgeldiniz" }, user.Email);
+                await emailService.SendAsync(new IdentityMessage() { Body = body, Subject = "Şifre Değişikliği" }, user.Email);
                 return RedirectToAction("Logout","Account");
             }
             return View("UserProfile",model);
@@ -278,6 +302,113 @@ namespace Eticaret.Controllers
         {
             return View();
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Activation(string code)
+        {
+            try
+            {
+                var userStore = UserManager;
+                var user = userStore.Users.FirstOrDefault(x => x.ActivationCode == code);
+
+                if (user != null)
+                {
+                    if (user.EmailConfirmed)
+                    {
+                        ViewBag.Message = $"<span class='alert alert-success'>Bu hesap daha önce aktive edilmiştir</span>";
+                    }
+                    else
+                    {
+                        user.EmailConfirmed = true;
+
+                        UserManager.Update(user);
+                        ViewBag.Message = $"<span class='alert alert-success'>Aktivasyon işlemi başarılı</span>";
+                    }
+                }
+                else
+                {
+                    ViewBag.Message = $"<span class='alert alert-danger'>Aktivasyon başarısız</span>";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = $"<span class='alert alert-danger'>Aktivasyon işleminde bir hata oluştu</span>"+ex.Message;
+            }
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult RecoverPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public async Task<ActionResult> RecoverPassword(RecoverPasswordViewModel model)
+        {
+            try
+            {
+                var userStore = new UserStore<ApplicationUser>(identityDb);
+                var userManager = UserManager;
+                var user = await userStore.FindByEmailAsync(model.Email);
+
+                if (user == null)
+                {
+                    //ModelState.AddModelError(string.Empty, $"{model.Email} mail adresine kayıtlı bir üyeliğe erişilemedi");
+                    TempData["mesaj"] = $"{model.Email} mail adresine kayıtlı bir üyeliğe erişilemedi";
+                    return View(model);
+                }
+               
+                var newPassword = StringHelpers.GetCode().Substring(0, 6);//yeni şifre
+                await userStore.SetPasswordHashAsync(user, userManager.PasswordHasher.HashPassword(newPassword));
+                userStore.Context.SaveChanges();
+                TempData["mesaj1"] = "Yeni şifreniz mail adresinize gönderildi.";
+                //mail gönder
+                var emailService = new EmailService();
+                var body = $"Merhaba <b>{user.Name}  {user.Surname}</b> <br/>Hesabınızın parolası sıfırlanmıştır" +
+                    $"<br/>Yeni parolanız: <b>{newPassword}</b><br/><p>Yukarıdaki parolayı kullanarak sisteminize giriş yapabilirsiniz.</p>";
+               emailService.Send(new IdentityMessage() { Body = body, Subject = $"{user.UserName} Şifre Kurtarma" }, user.Email);
+               
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = $"<span class='alert alert-danger'>Sıfırlama işleminde bir hata oluştu</span>" + ex.Message;
+            }
+
+            return View();
+        }
+
+        public ActionResult AddressList()
+        {
+            var addres = db.Addres.Where(u => u.UserName == User.Identity.Name).ToList();
+            return View(addres);
+        }
+        public ActionResult CreateUserAddress()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateUserAddress(Addres entity)
+        {
+            entity.UserName = User.Identity.GetUserName();
+
+            db.Addres.Add(entity);
+            db.SaveChanges();
+            return RedirectToAction("AddressList");
+        }
+
+        public ActionResult DeleteUserAddress(int id)
+        {
+            Addres addres = db.Addres.Find(id);
+            db.Addres.Remove(addres);
+            db.SaveChanges();
+            return RedirectToAction("AddressList");
+        }
+
+
 
 
     }

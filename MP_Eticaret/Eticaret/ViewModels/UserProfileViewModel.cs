@@ -45,6 +45,6 @@ namespace Eticaret.ViewModels
         public int ExpYear { get; set; }
         public int ExpMonth { get; set; }
 
-        //public string Image { get; set; }
+        public string ProfileImageName { get; set; }
     }
 }

@@ -14,5 +14,9 @@ namespace Eticaret.Controllers
         {
             return PartialView(new Bildirim().SiparisBekleyenListe());
         }
+        public PartialViewResult YorumMenusu()
+        {
+            return PartialView(new Bildirim().OnayBekleyenListe());
+        }
     }
 }

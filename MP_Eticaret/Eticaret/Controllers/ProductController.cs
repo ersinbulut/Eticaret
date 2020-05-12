@@ -19,7 +19,7 @@ namespace Eticaret.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
-            var products = db.Products.Include(p => p.Category);
+            var products = db.Products.Include(p => p.Category).OrderByDescending(x=>x.Id); 
             return View(products.ToList());
         }
 

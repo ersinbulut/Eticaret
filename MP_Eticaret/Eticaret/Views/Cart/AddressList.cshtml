@@ -21,7 +21,7 @@
             <div class="span9">
 
 
-                <h2>Adres Listeniz</h2>
+                <h2>Adres Seçimi</h2>
 
                 <p>
                     @Html.ActionLink("Yeni Adres Ekle", "CreateUserAddress")
@@ -72,11 +72,15 @@
                             </td>
                             <td>
                                 @*@using (Html.BeginForm("CreateOrder", "Cart"))
-                                {
-                                    @Html.HiddenFor(modelItem => item.Id)
-                                    <button type="submit" class="btn btn-large btn-primary pull-right">Varsayılan Adres Seç<i class=" icon-shopping-cart"></i></button>
-                                }*@
-                                @Html.ActionLink("Seç", "CreateOrder", new { id = item.Id }) |
+        {
+            @Html.HiddenFor(modelItem => item.Id)
+            <button type="submit" class="btn btn-large btn-primary pull-right">Varsayılan Adres Seç<i class=" icon-shopping-cart"></i></button>
+        }*@
+                                @*@Html.ActionLink("Sil", "DeleteUserAddress", new { id = item.Id }, new { @class = "btn btn-medium btn-danger " }) |*@
+                                @*@Html.ActionLink("Varsayılan Adres Seç", "CreateOrder", new { id = item.Id }, new { @class = "btn btn-medium btn-primary" })*@
+                                <a href="/Cart/DeleteUserAddress/@item.Id" class="btn btn-danger">Sil</a>
+
+                                <a href="/Cart/CreateOrder/@item.Id" class="btn btn-success">Alışverişi Tamamla <i class="icon-arrow-right"></i></a>
                             </td>
                         </tr>
                     }

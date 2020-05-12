@@ -17,6 +17,7 @@ namespace Eticaret.Identity
 
         public System.Data.Entity.DbSet<Eticaret.Identity.ApplicationRole> IdentityRoles { get; set; }
 
+
         //public System.Data.Entity.DbSet<Eticaret.Identity.ApplicationUser> IdentityUsers { get; set; }
     }
 }

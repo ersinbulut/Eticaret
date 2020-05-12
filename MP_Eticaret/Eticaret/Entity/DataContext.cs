@@ -21,7 +21,8 @@ namespace Eticaret.Entity
         /**/
         public DbSet<Addres> Addres { get; set; }
         //public DbSet<Users> Users { get; set; }
-        //public DbSet<Comments> Comments { get; set; }
+        public DbSet<Comments> Comments { get; set; }
+
         //public DbSet<Messages> Messages { get; set; }
         //public DbSet<MessageReplies> MessageReplies { get; set; }
 

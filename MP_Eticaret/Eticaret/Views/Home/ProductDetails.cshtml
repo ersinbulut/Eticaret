@@ -45,16 +45,24 @@
                                         <tr class="techSpecRow"><td class="techSpecTD1">Adı:</td><td class="techSpecTD2">@Model.Name</td></tr>
                                         <tr class="techSpecRow"><td class="techSpecTD1">Açıklama</td><td class="techSpecTD2">@Model.Description</td></tr>
                                         <tr class="techSpecRow"><td class="techSpecTD1">Kategori:</td><td class="techSpecTD2">@Model.Category.Name</td></tr>
-                                        <tr class="techSpecRow"><td class="techSpecTD1">Fiyat:</td><td class="techSpecTD2">@Model.Price</td></tr>
+                                        <tr class="techSpecRow"><td class="techSpecTD1">Fiyat:</td><td class="techSpecTD2">@Model.Price ₺</td></tr>
                                         <tr class="techSpecRow"><td class="techSpecTD1">Adet:</td><td class="techSpecTD2">@Model.Stock</td></tr>
 
                                         <tr class="techSpecRow">
                                             <th colspan="2">
-                                                @using (Html.BeginForm("AddToCart", "Cart"))
+                                                @if (Request.IsAuthenticated)//true ise kullanıcı login olmuş demek
                                                 {
-                                                    @Html.HiddenFor(i => i.Id)
-                                                    <button type="submit" class="btn btn-large btn-primary pull-right">Sepete Ekle<i class=" icon-shopping-cart"></i></button>
+                                                    using (Html.BeginForm("AddToCart", "Cart"))
+                                                    {
+                                                        @Html.HiddenFor(i => i.Id)
+                                                        <button type="submit" class="btn btn-large btn-primary pull-right">Sepete Ekle <i class=" icon-shopping-cart"></i></button>
+                                                    }
                                                 }
+                                                else
+                                                {
+                                                    <a class="btn btn-large btn-primary pull-right" href="/Account/Login">Sepete Ekle <i class=" icon-shopping-cart"></i></a>
+                                                }
+
                                             </th>
                                         </tr>
                                     </tbody>
@@ -78,7 +86,10 @@
                             </ul>*@
                         <div id="myTabContent" class="tab-content">
                             <div class="tab-pane fade active in" id="home">
-                                <h4>Ürün Özellikleri</h4>
+                                <div class="form-group">
+                                    <h5>Ürün Özellikleri</h5>
+                                    <hr />
+                                </div>
                                 <table class="table table-bordered">
                                     <tbody>
                                         <tr class="techSpecRow"><th colspan="2">Ürün Detay</th></tr>
@@ -87,7 +98,11 @@
                                         <tr class="techSpecRow"><td class="techSpecTD1">Çıkış Yılı:</td><td class="techSpecTD2"> @Model.Releasedon</td></tr>
                                 </table>
 
-                                <h5>Özellikler</h5>
+                                <div class="form-group">
+                                    <h5>Özellikler</h5>
+                                    <hr />
+                                </div>
+
                                 <p>
                                     @Model.Features
                                 </p>
@@ -97,31 +112,84 @@
 
                             @if (Request.IsAuthenticated)//true ise kullanıcı login olmuş demek
                             {
-                                @*@using (Html.BeginForm())*@
-                                {
+                                <div class="form-group">
                                     <h5>Yorum Yap</h5>
-                                    <form action="/action_page.php">
-                                        <div class="form-group">
-                                            <textarea style="width:500px;" class="form-control" rows="5" id="comment" placeholder="Yorum.." name="text"></textarea>
-                                            @*@Html.TextAreaFor(model => model.Comment.Yorum, new { htmlAttributes = new { @class = "form-control", @style = "max-width:35%" } })*@
+                                    <hr />
+                                </div>
+                                <form action="/Home/Comment" method="post">
+                                    @Html.Hidden("ProductId", Model.Id)
+                                    @Html.Hidden("Name", Model.Name)
+                                    @Html.Hidden("UserName", this.User.Identity.Name)
+
+                                    <div class="form-group">
+                                        <textarea style="width: 855px; margin: 0px 0px 10px; height: 79px;" class="form-control" rows="5" name="Yorum" placeholder="Yorum.."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+
+                                            @*<script src="https://cdnjs.cloudflare.com/ajax/libs/javascript.util/0.12.12/javascript.util.min.js" type="text/javascript">
+                                                    $(document).ready(function () {
+                                                        $("#ButtonMesajGoster").click(function () {
+                                                            $.ajax({
+                                                                type: "POST",
+                                                                url: "MesajGoster",
+                                                                contentType: "application/text; charset=utf-8",
+                                                                dataType: "text",
+                                                                success: function (msg) {
+                                                                    $("#JavaScriptMesaj").append(msg);
+                                                                }
+                                                            })
+                                                        })
+                                                    })
+                                                </script>*@
+                                            <script>
+                                                function myFunction() {
+                                                    alert("Yorumunuz yöneticinin onayına gönderildi en kısa zamanda yayınlanacak..!");
+                                                }
+                                            </script>
+                                            <input onclick="myFunction()" type="submit" value="Gönder" class="btn btn-primary" @*id="ButtonMesajGoster"*@ />
+                                            @*<div id="JavaScriptMesaj"></div>*@
                                         </div>
-                                        @*<button type="submit" class="btn btn-primary">Gönder</button>*@
-                                        <div class="form-group">
-                                            <div class="col-md-offset-2 col-md-10">
-                                                <input type="submit" value="Gönder" class="btn btn-primary" />
-                                            </div>
+                                    </div>
+                                </form>
+                                @*if (TempData["mesaj"] != null)
+                                    {
+                                        <div class="alert alert-success alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                            <h4>	<i class="icon fa fa-check"></i> Başarılı!</h4>
+                                            Yorumunuz yöneticinin onayına gönderildi en kısa zamanda yayınlanacak..
                                         </div>
-                                    </form>
+                                    }*@
+                                <div class="form-group">
                                     <h5>Ürün Hakkındaki Yorumlar</h5>
-                                    <table class="table table-dark">
-                                        <tr style="background-color:aqua;">
-                                            <td>
-                                                <h5 class="text-warning">@this.User.Identity.Name</h5>
-                                                <h4 style="color:white;">Güzel bir ürün tavsiye ederim</h4>
-                                               
-                                                @*@Html.DisplayFor(model => model.Comment.YorumTarihi)<br />
-                                                @Html.DisplayFor(model => model.Comment.Yorum)*@
-                                            </td>
+                                    <hr />
+                                </div>
+                                if (Model.Comments.Count == 0)
+                                {
+                                    <div class="alert alert-Info">
+                                        <strong>Ürün hakkında yorum bulunmamaktadır!</strong>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <table class="table table-bordered">
+                                        <tr class="media-list">
+                                            <ul class="media">
+                                                @foreach (var item in Model.Comments.Where(x => x.IsApproved).OrderByDescending(x => x.Id).ToList())
+                                                {
+                                                    <li class="media-left" style="border-radius:10px;">
+                                                        <a href="">
+                                                            <img class="media-object img-circle img-thumbnail" style="width:64px;" src="~/Content/Images/user.png">
+                                                        </a>
+                                                    </li>
+                                                    <li class="media-body" style="margin-left:70px; margin-top:-60px;">
+                                                        <h4 class="media-heading">@item.UserName</h4>
+                                                        <p style="margin-left:10px; width:700px;">@item.Yorum</p>
+                                                        <p><b>Yorum Tarihi:</b>  @item.AddedDate.ToString("dd.MM.yyyy")</p>
+                                                    </li>
+
+                                                }
+                                            </ul>
                                         </tr>
                                     </table>
                                 }

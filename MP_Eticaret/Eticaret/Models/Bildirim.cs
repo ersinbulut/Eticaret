@@ -13,5 +13,9 @@ namespace Eticaret.Models
         {
             return db.Orders.Where(i => i.OrderState == EnumOrderState.Bekleniyor).ToList();
         }
+        public List<Comments> OnayBekleyenListe()
+        {
+            return db.Comments.Where(i => i.IsApproved == false).ToList();
+        }
     }
 }

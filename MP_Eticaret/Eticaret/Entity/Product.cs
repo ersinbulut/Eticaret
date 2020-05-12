@@ -30,7 +30,9 @@ namespace Eticaret.Entity
         public int ParentId { get; internal set; }
         public virtual Category Category { get; set; }
 
-        //public virtual ICollection<Comments> Comments { get; set; }
+        public virtual ICollection<Comments> Comments { get; set; }
+
+       
 
 
     }
