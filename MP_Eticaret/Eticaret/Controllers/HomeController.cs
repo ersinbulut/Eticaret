@@ -42,7 +42,7 @@ namespace Eticaret.Controllers
             if (categoryId > 0)
                 query = query.Where(i => i.CategoryId == subCategoryId);
             else
-                query = query.Where(i => i.Category.ParentId == subCategoryId);
+                query = query.Where(i => i.Category.ParentId == subCategoryId || i.CategoryId == subCategoryId);
 
             return View(query.ToList());
         }
