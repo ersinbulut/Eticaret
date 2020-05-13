@@ -1,6 +1,6 @@
-﻿@model IEnumerable<Eticaret.Entity.Addres>
+﻿@model IEnumerable<Eticaret.Entity.Pay>
 @{
-    ViewBag.Title = "AddressList";
+    ViewBag.Title = "PayList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -21,32 +21,32 @@
             <div class="span9">
 
 
-                <h2>Adres Seçimi</h2>
+                <h2>Kayıtlı Ödeme Yöntemlerim</h2>
 
-                <p>
-                    <img src="~/Content/Images/home.png" width="25" height="25" />@Html.ActionLink("Yeni Adres Ekle", "CreateUserAddress")
-                </p>
+                @*<p>
+                        <img src="~/Content/Images/visa.png" width="25" height="25" />
+                        @Html.ActionLink("Yeni Ödeme Yöntemi", "CreateUserPay", new { id = TempData["Adressid"] })
+                    </p>*@
                 <table class="table table-hover">
                     <tr>
                         <th></th>
+                        <th>Tür</th>
                         <th>
-                            @Html.DisplayNameFor(model => model.AdresBasligi)
+                            @Html.DisplayNameFor(model => model.CartNumber)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Adres)
+                            @Html.DisplayNameFor(model => model.SecurityNumber)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Il)
+                            @Html.DisplayNameFor(model => model.CartHasName)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Ilce)
+                            Son Kullanma Ay/Yıl
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Mahalle)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.PostaKodu)
-                        </th>
+                        <th></th>
+                        @*<th>
+                                @Html.DisplayNameFor(model => model.UserName)
+                            </th>*@
                         <th></th>
                     </tr>
 
@@ -54,26 +54,28 @@
                     {
                         <tr>
                             <td>
-                                <img src="~/Content/Images/home.png" width="25" height="25" />
+                                <img src="~/Content/Images/visa.png" width="25" height="25" />
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.AdresBasligi)
+                                Kredi Kartı
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Adres)
+                                @*@Html.DisplayFor(modelItem => item.CartNumber.Substring(12, 4))*@
+                                ***********@item.CartNumber.Substring(12, 4)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Il)
+                                @*@Html.DisplayFor(modelItem => item.SecurityNumber)*@
+                                @item.SecurityNumber.Substring(0, 2)*
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Ilce)
+                                @Html.DisplayFor(modelItem => item.CartHasName)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Mahalle)
+                                @Html.DisplayFor(modelItem => item.ExpMonth)/@item.ExpYear.ToString().Substring(2, 2)
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PostaKodu)
-                            </td>
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </td>*@
                             <td>
                                 @*@using (Html.BeginForm("CreateOrder", "Cart"))
                                     {
@@ -82,13 +84,11 @@
                                     }*@
                                 @*@Html.ActionLink("Sil", "DeleteUserAddress", new { id = item.Id }, new { @class = "btn btn-medium btn-danger " }) |*@
                                 @*@Html.ActionLink("Varsayılan Adres Seç", "CreateOrder", new { id = item.Id }, new { @class = "btn btn-medium btn-primary" })*@
-                                <a href="/Cart/DeleteUserAddress/@item.Id" class="btn btn-danger">Sil</a>
+                                @*<a href="/Account/EditUserPay/@item.Id" class="btn btn-primary">Düzenle</a>*@
+                                <a href="/Account/DeleteUserPay/@item.Id" class="btn btn-danger">Sil</a>
 
-                                <a href="/Cart/PayList/@item.Id" class="btn btn-success">Adres Seç <i class="icon-arrow-right"></i></a>
-
-
-                                @*<a href="/Cart/CreateOrder/@item.Id" class="btn btn-success">Alışverişi Tamamla <i class="icon-arrow-right"></i></a>*@
-
+                                @*<a href="/Cart/CreateOrder/@item.Id" class="btn btn-success">Ödeme Yap <i class="icon-arrow-right"></i></a>*@
+                                @*@Html.ActionLink("Ödeme Yap", "CreateOrder", new { id = item.AddressID, payid = item.Id }, new { @class = "btn btn-medium btn-primary" })*@
                             </td>
                         </tr>
                     }
@@ -103,3 +103,4 @@
         </div>
     </div>
 </div>
+

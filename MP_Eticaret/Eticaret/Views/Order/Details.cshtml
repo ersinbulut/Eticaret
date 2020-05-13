@@ -78,6 +78,19 @@
             Posta Kodu : @Html.DisplayFor(Model => Model.PostaKodu)
             <br />
         </dd>
+        <dt>
+            Ödeme :
+        </dt>
+        <dd>
+            Kart Numarası :     ***********@Model.CartNumber.Substring(12, 4)
+            <br />
+            Kart Sahibi :   @Html.DisplayFor(Model => Model.CartHasName)
+            <br />
+            Güvenlik Numarası :  @Model.SecurityNumber.Substring(0, 2)*
+            <br />
+            Son Kullanma Ay/Yıl: @Html.DisplayFor(Model => Model.ExpMonth)/ @Model.ExpYear.ToString().Substring(2, 2)
+            <br />
+        </dd>
 
     </dl>
 </div>

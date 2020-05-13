@@ -69,11 +69,11 @@ namespace Eticaret.Controllers
                 PostaKodu = i.Addres.PostaKodu,
                 UserAddressID = i.UserAddressID,
                 /*kart bilgileri*/
-                CartNumber =i.CartNumber,
-                SecurityNumber=i.SecurityNumber,
-                CartHasName=i.CartHasName,
-                ExpYear=i.ExpYear,
-                ExpMonth=i.ExpMonth,
+                CartNumber =i.Pay.CartNumber,
+                SecurityNumber=i.Pay.SecurityNumber,
+                CartHasName=i.Pay.CartHasName,
+                ExpYear=i.Pay.ExpYear,
+                ExpMonth=i.Pay.ExpMonth,
                 /**/
                 OrderLines=i.OrderLines.Select(x=> new OrderLineModel()
                 {
@@ -408,6 +408,54 @@ namespace Eticaret.Controllers
             return RedirectToAction("AddressList");
         }
 
+        /**/
+        public ActionResult PayList()
+        {
+            //Pay pay = new Pay();
+            //pay.AddressID = id;
+            //db.Pays.Add(pay);
+            ////var pays = db.Pays.Where(u => u.AddressID == pay.AddressID).ToList();
+            //return View(db.Pays.Where(u => u.AddressID == pay.AddressID).ToList());
+
+            var pay = db.Pays.Where(u => u.UserName == User.Identity.Name).ToList();
+            return View(pay);
+        }
+        public ActionResult CreateUserPay()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateUserPay(Pay entity)
+        {
+            if (ModelState.IsValid)
+            {
+                entity.UserName = User.Identity.GetUserName();
+                db.Pays.Add(entity);
+                db.SaveChanges();
+                return RedirectToAction("PayList/" + entity.AddressID);
+            }
+            else
+            {
+                return View(entity);
+            }
+
+        }
+
+        public ActionResult DeleteUserPay(int id)
+        {
+            Pay pay = db.Pays.Find(id);
+            db.Pays.Remove(pay);
+            db.SaveChanges();
+            return RedirectToAction("PayList/" + pay.AddressID);
+        }
+        
+        //public ActionResult EditUserPay(int id)
+        //{
+        //    Pay pay = db.Pays.Find(id);
+        //    db.Pays.Remove(pay);
+        //    db.SaveChanges();
+        //    return RedirectToAction("~/PayList/" + pay.AddressID);
+        //}
 
 
 

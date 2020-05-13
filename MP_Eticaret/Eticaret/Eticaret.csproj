@@ -790,6 +790,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\home.png" />
     <Content Include="Content\Images\in.jpg" />
     <Content Include="Content\Images\iphone1.jfif" />
     <Content Include="Content\Images\kamera1.jpg" />
@@ -797,6 +798,7 @@
     <Content Include="Content\Images\pc2.jpg" />
     <Content Include="Content\Images\samsung1.jpeg" />
     <Content Include="Content\Images\user.png" />
+    <Content Include="Content\Images\visa.png" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1065,6 +1067,7 @@
     <Compile Include="Entity\DataInitializer.cs" />
     <Compile Include="Entity\EnumOrderState.cs" />
     <Compile Include="Entity\Order.cs" />
+    <Compile Include="Entity\Pay.cs" />
     <Compile Include="Entity\Product.cs" />
     <Compile Include="Enums\MessageStates.cs" />
     <Compile Include="Global.asax.cs">
@@ -1237,6 +1240,10 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Account\CreateUserAddress.cshtml" />
     <Content Include="Views\Account\AddressList.cshtml" />
+    <Content Include="Views\Cart\PayList.cshtml" />
+    <Content Include="Views\Cart\CreateUserPay.cshtml" />
+    <Content Include="Views\Account\PayList.cshtml" />
+    <Content Include="Views\Account\CreateUserPay.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

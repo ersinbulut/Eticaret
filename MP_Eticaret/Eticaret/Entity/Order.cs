@@ -20,12 +20,12 @@ namespace Eticaret.Entity
 
         public string UserName { get; set; }
 
-        public string AdresBasligi { get; set; }
-        public string Adres { get; set; }
-        public string Il { get; set; }
-        public string Ilce { get; set; }
-        public string Mahalle { get; set; }
-        public string PostaKodu { get; set; }
+        //public string AdresBasligi { get; set; }
+        //public string Adres { get; set; }
+        //public string Il { get; set; }
+        //public string Ilce { get; set; }
+        //public string Mahalle { get; set; }
+        //public string PostaKodu { get; set; }
         //*//*/
        
         public string CartNumber { get; set; }
@@ -41,6 +41,10 @@ namespace Eticaret.Entity
         public int UserAddressID { get; set; }
         [ForeignKey("UserAddressID")]
         public virtual Addres Addres { get; set; }
+
+        public int PayID { get; set; }
+        [ForeignKey("PayID")]
+        public virtual Pay Pay { get; set; }
 
         public virtual List<Product> Products { get; set; }
     }

@@ -78,22 +78,23 @@ namespace Eticaret.Controllers
            ).ToList();
             return View(urun);
         }
-        public ActionResult Comment()
-        {
-            Comments yorum = new Comments();
-            return View(yorum);
-        }
+        //public ActionResult Comment()
+        //{
+        //    Comments yorum = new Comments();
+        //    return View(yorum);
+        //}
         [HttpPost]
-        public void Comment(Comments comment)
+        public ActionResult Comment(Comments comment)
         {
             if (ModelState.IsValid)
             {
                 comment.AddedDate = DateTime.Now;
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                //return RedirectToAction("MesajGoster");
+                TempData["Mesaj"] = "Yorumunuz yöneticinin onayına gönderildi en kısa zamanda yayınlanacak..!";
+                return RedirectToAction("ProductDetails/" + comment.ProductId);
             }
-            //return View();
+            return View();
         }
         public JavaScriptResult MesajGoster()
         {

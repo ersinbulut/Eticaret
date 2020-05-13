@@ -20,6 +20,8 @@ namespace Eticaret.Entity
         public DbSet<OrderLine> OrderLines { get; set; }
         /**/
         public DbSet<Addres> Addres { get; set; }
+
+        public DbSet<Pay> Pays { get; set; }
         //public DbSet<Users> Users { get; set; }
         public DbSet<Comments> Comments { get; set; }
 

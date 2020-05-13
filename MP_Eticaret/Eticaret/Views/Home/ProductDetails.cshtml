@@ -142,24 +142,24 @@
                                                         })
                                                     })
                                                 </script>*@
-                                            <script>
+                                            @*<script>
                                                 function myFunction() {
                                                     alert("Yorumunuz yöneticinin onayına gönderildi en kısa zamanda yayınlanacak..!");
                                                 }
-                                            </script>
-                                            <input onclick="myFunction()" type="submit" value="Gönder" class="btn btn-primary" @*id="ButtonMesajGoster"*@ />
+                                            </script>*@
+                                            <input  type="submit" value="Gönder" class="btn btn-primary" @*id="ButtonMesajGoster"*@ />
                                             @*<div id="JavaScriptMesaj"></div>*@
                                         </div>
                                     </div>
                                 </form>
-                                @*if (TempData["mesaj"] != null)
-                                    {
-                                        <div class="alert alert-success alert-dismissable">
-                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                            <h4>	<i class="icon fa fa-check"></i> Başarılı!</h4>
-                                            Yorumunuz yöneticinin onayına gönderildi en kısa zamanda yayınlanacak..
-                                        </div>
-                                    }*@
+                                if (TempData["mesaj"] != null)
+                                {
+                                    <div class="alert alert-success alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <h4>	<i class="icon fa fa-check"></i> Başarılı!</h4>
+                                        @TempData["Mesaj"]
+                                    </div>
+                                }
                                 <div class="form-group">
                                     <h5>Ürün Hakkındaki Yorumlar</h5>
                                     <hr />
@@ -185,7 +185,7 @@
                                                     <li class="media-body" style="margin-left:70px; margin-top:-60px;">
                                                         <h4 class="media-heading">@item.UserName</h4>
                                                         <p style="margin-left:10px; width:700px;">@item.Yorum</p>
-                                                        <p><b>Yorum Tarihi:</b>  @item.AddedDate.ToString("dd.MM.yyyy")</p>
+                                                        <p><b>Yorum Tarihi:</b>  @item.AddedDate.ToLongDateString()</p>
                                                     </li>
 
                                                 }

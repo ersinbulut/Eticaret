@@ -76,33 +76,37 @@
                         </tr>
                     </tbody>
                 </table>
-                @*<h1>Ödeme Bilgileri</h1>
+                <h1>Ödeme Bilgileri</h1>
                 <table id="compairTbl" class="table table-bordered">
                     <tbody>
                         <tr>
                             <td>Ödenen Tutar (₺)</td>
-                            <td>Model.Total</td>
+                            <td>@Model.Total</td>
+                        </tr>
+                        <tr>
+                            <td>Kart Türü</td>
+                            <td>Kredi Kartı</td>
                         </tr>
                         <tr>
                             <td>Kart Numarası</td>
                             <td>
-                                ************Model.CartNumber.Substring(12, 4)
+                                <img src="~/Content/Images/visa.png" width="25" height="25" />***********@Model.CartNumber.Substring(12, 4)
                             </td>
                         </tr>
                         <tr>
                             <td>Güvenlik Numarası</td>
-                            <td>Model.SecurityNumber.Substring(0, 2)*</td>
+                            <td>@Model.SecurityNumber.Substring(0, 2)*</td>
                         </tr>
                         <tr>
                             <td>Kart Sahibi</td>
-                            <td>Model.CartHasName</td>
+                            <td>@Model.CartHasName</td>
                         </tr>
                         <tr>
                             <td>Son Kullanma Tarihi</td>
-                            <td>Model.ExpMonth / Model.ExpYear.ToString().Substring(2, 2) </td>
+                            <td>@Model.ExpMonth / @Model.ExpYear.ToString().Substring(2, 2) </td>
                         </tr>
 
-                </table>*@
+                </table>
 
                 <table id="compairTbl" class="table table-bordered">
                     <thead>

@@ -81,11 +81,51 @@ namespace Eticaret.Controllers
             return RedirectToAction("AddressList");
         }
 
+        /**/
+        public ActionResult PayList(int id)
+        {
+            Pay pay = new Pay();
+            TempData["Adressid"] = id;
+            pay.AddressID = id;
+            db.Pays.Add(pay);
+            //var pays = db.Pays.Where(u => u.AddressID == pay.AddressID).ToList();
+            return View(db.Pays.Where(u => u.AddressID == pay.AddressID).ToList());
+        }
+        public ActionResult CreateUserPay()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateUserPay(Pay entity,int id)
+        {
+            if (ModelState.IsValid)
+            {
+                entity.UserName = User.Identity.GetUserName();
+                entity.AddressID = id;
+                db.Pays.Add(entity);
+                db.SaveChanges();
+                return RedirectToAction("PayList/"+entity.AddressID);
+            }
+            else
+            {
+                return View(entity);
+            }
+          
+        }
+
+        public ActionResult DeleteUserPay(int id)
+        {
+            Pay pay = db.Pays.Find(id);
+            db.Pays.Remove(pay);
+            db.SaveChanges();
+            return RedirectToAction("PayList/"+pay.AddressID);
+        }
+
         //public ActionResult CreateOrder()
         //{
         //    return View(new Addres());
         //}
-        public ActionResult CreateOrder(List<Addres> entity, int id)
+        public ActionResult CreateOrder(List<Addres> entity, List<Pay> entity1, int id, int payid)
         {
            
             var cart = GetCart();
@@ -95,7 +135,7 @@ namespace Eticaret.Controllers
             }
             if (ModelState.IsValid)//sepette ürün var ise
             {
-                SaveOrder(cart, entity,id);
+                SaveOrder(cart, entity, entity1, id, payid);
                     //veri tabanına kaydet
                     cart.Clear();
                    // return View("Complated");
@@ -104,10 +144,10 @@ namespace Eticaret.Controllers
             }
             else
             {
-                 return View(entity);
+                 return View(entity1);
             }
         }
-        private void SaveOrder(Cart cart, List<Addres> entity, int id)
+        private void SaveOrder(Cart cart, List<Addres> entity, List<Pay> entity1, int id,int payid)
         {
             var order = new Order();
             order.OrderNumber = "A" + (new Random()).Next(1111, 9999).ToString();//a harfi ile başlayan 4 haneli bir sipariş numarası 
@@ -116,25 +156,8 @@ namespace Eticaret.Controllers
             order.OrderState = EnumOrderState.Bekleniyor;
             order.UserName = User.Identity.Name;
             order.UserAddressID = id;
-           
-            //foreach (var item in order.Addres)
-            //{
-            //    item.AdresBasligi = entity.
-            //    item.Adres = entity.Adres;
-            //    item.Il = entity.Il;
-            //    item.Ilce = entity.Ilce;
-            //    item.Mahalle = entity.Mahalle;
-            //    item.PostaKodu = entity.PostaKodu;
-            //    order.Addres.Add(item);
-            //}
-           
-            ///*kart bilgileri*/
-            //order.CartNumber = entity.CartNumber;
-            //order.SecurityNumber = entity.SecurityNumber;
-            //order.CartHasName = entity.CartHasName;
-            //order.ExpYear = entity.ExpYear;
-            //order.ExpMonth = entity.ExpMonth;
-            ///**/
+            order.PayID = payid;
+
             order.OrderLines = new List<OrderLine>();
             foreach (var pr in cart.Cartlines)
             {
@@ -245,13 +268,13 @@ namespace Eticaret.Controllers
                 Ilce = i.Addres.Ilce,
                 Mahalle = i.Addres.Mahalle,
                 PostaKodu = i.Addres.PostaKodu,
-                UserAddressID =i.UserAddressID,
+                UserAddressID = i.UserAddressID,
                 /*kart bilgileri*/
-                CartNumber = i.CartNumber,
-                SecurityNumber = i.SecurityNumber,
-                CartHasName = i.CartHasName,
-                ExpYear = i.ExpYear,
-                ExpMonth = i.ExpMonth,
+                CartNumber = i.Pay.CartNumber,
+                SecurityNumber = i.Pay.SecurityNumber,
+                CartHasName = i.Pay.CartHasName,
+                ExpYear = i.Pay.ExpYear,
+                ExpMonth = i.Pay.ExpMonth,
                 /**/
                 OrderLines = i.OrderLines.Select(x => new OrderLineModel()
                 {
