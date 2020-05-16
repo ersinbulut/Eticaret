@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Eticaret.Entity.Comments>
+
+<li class="dropdown notifications-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-envelope-o"></i>
+        <span class="label label-success">@Model.Count()</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li class="header"><strong>Bildirimler</strong>(Onay Bekleyen Yorumlar)</li>
+        <li>
+            <!-- inner menu: contains the actual data -->
+            <ul class="menu">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <a href="/Comment/Edit/@item.Id">
+                            <strong>@item.UserName: </strong> Kullanıcısı onay bekliyor..!!
+                        </a>
+                    </li>
+                }
+
+
+            </ul>
+        </li>
+        <li class="footer">
+            @if (Model.Count() > 0)
+            {
+                <p>Bildirimleriniz</p>
+            }
+            else
+            {
+                <span>Bildirim yok</span>
+            }
+        </li>
+    </ul>
+</li>

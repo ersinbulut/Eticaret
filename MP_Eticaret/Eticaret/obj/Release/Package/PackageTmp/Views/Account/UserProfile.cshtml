@@ -1,0 +1,227 @@
+﻿@using Eticaret.Identity
+@model Eticaret.ViewModels.ProfilePasswordViewModel
+@{
+    ViewBag.Title = "UserProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="mainBody">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar ================================================== -->
+            @*<div id="sidebar" class="span3">
+                    @Html.Action("Summary", "Cart")
+                    <ul id="sideManu" class="nav nav-tabs nav-stacked">
+                        @Html.Action("_CategoryList", "Category")
+                    </ul>
+                    <br />
+                    @Html.Action("FeaturedProductList", "Home")
+                </div>*@
+            <!-- Sidebar end=============================================== -->
+            <div class="span12">
+
+                <table class="table table-bordered">
+                    <tr>
+                        <th>
+                            PROFİL
+                            <a href="/Account/UserPassword" style="margin-left:85%;" class="btn btn-primary">Şifre Değiştir</a>
+                        </th>
+
+                    </tr>
+                    <tr>
+                        @if (TempData["mesaj"] != null)
+                        {
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h4>	<i class="icon fa fa-check"></i> Başarılı!</h4>
+                                Bilgileriniz Kaydedildi..
+                            </div>
+                        }
+                        <td>
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#home">Profil</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#menu1">Adres</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#menu2">Ödeme</a>
+                                </li>
+
+                            </ul>
+                            @*<div class="row">
+                                    <div class="col-md-3">
+                                        <center><img src="~/Content/Images/in.jpg" class="img-circle img-responsive img-thumbnail" /></center>
+                                    </div>
+                                </div>*@
+                            @using (Html.BeginForm("UpdateProfile", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(x => x.UserProfileViewModel.Id)
+                                @Html.HiddenFor(x => x.UserProfileViewModel.Username)
+                                <div class="tab-content">
+                                    <img src="~/Content/Images/user.png" class="img-circle img-responsive img-thumbnail" style="margin-left:700px;" />
+                                    <div class="tab-pane active" id="home" style="margin-top:-260px;">
+                                        <h4>Profil Bilgileri</h4>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextBoxFor(model => model.UserProfileViewModel.Name, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextBoxFor(model => model.UserProfileViewModel.Surname, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextBoxFor(model => model.UserProfileViewModel.DateOfBirth, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.RadioButtonFor(model => model.UserProfileViewModel.Gender, "Erkek")Erkek
+                                                @Html.RadioButtonFor(model => model.UserProfileViewModel.Gender, "Kadın")Kadın
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextBoxFor(model => model.UserProfileViewModel.Email, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextBoxFor(model => model.UserProfileViewModel.PhoneNumber, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        @*<div class="control-group">
+                                            <div class="controls">
+                                                @Html.Label("Profil Resmi", new { htmlAttributes = new { @class = "form-control" } })
+                                                <input type="file" name="Image" value="" />
+                                            </div>
+                                        </div>*@
+
+                                        @*<div class="form-group">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.ProfileImageName, new { htmlAttributes = new { @class = "form-control" } })
+                                                <div class="col-md-10">
+                                                    <input type="file" name="ProfileImageNameInput" value="" />
+                                                </div>
+                                            </div>*@
+
+                                    </div>
+                                    <div class="tab-pane fade" id="menu1" style="margin-top:-260px;">
+                                        <h4>Adres Bilgileri</h4>
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.AdresBasligi, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextBoxFor(model => model.UserProfileViewModel.AdresBasligi, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.Adres, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextAreaFor(model => model.UserProfileViewModel.Adres, new { @class = "form-control text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.Il, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextBoxFor(model => model.UserProfileViewModel.Il, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.Ilce, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextBoxFor(model => model.UserProfileViewModel.Ilce, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.Mahalle, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextBoxFor(model => model.UserProfileViewModel.Mahalle, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.PostaKodu, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextBoxFor(model => model.UserProfileViewModel.PostaKodu, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="menu2" style="margin-top:-260px;">
+                                        <h4>Ödeme Bilgileri</h4>
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.CartNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextBoxFor(model => model.UserProfileViewModel.CartNumber, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.SecurityNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextBoxFor(model => model.UserProfileViewModel.SecurityNumber, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.CartHasName, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextBoxFor(model => model.UserProfileViewModel.CartHasName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.ExpYear, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextBoxFor(model => model.UserProfileViewModel.ExpYear, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                @Html.LabelFor(model => model.UserProfileViewModel.ExpMonth, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.TextBoxFor(model => model.UserProfileViewModel.ExpMonth, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <button type="submit" class="btn btn-success">Güncelle</button>
+                                    </div>
+                                </div>
+
+                            }
+
+                        </td>
+                    </tr>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

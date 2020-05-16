@@ -1,0 +1,42 @@
+﻿@using Eticaret.Models
+@model IEnumerable<CategoryModel>
+@{
+    IEnumerable<CategoryModel> catList = Model;
+}
+@*@model List<Eticaret.Entity.Category>*@
+@helper GetTreeView(IEnumerable<CategoryModel> category, int parentID)
+{
+    foreach (var item in category.Where(a => a.ParentId.Equals(parentID)))
+    {
+        string categoryUrl = $"/Home/ProductList?categoryId={item.ParentId}&subCategoryId={item.Id}";
+        <li>
+            <a class="active" href=@categoryUrl><i class="icon-chevron-right"></i>@item.Name [@item.Count]</a>
+                @{var submenu = category.Where(a => a.ParentId.Equals(item.Id)).Count();}
+
+                @if (submenu > 0)
+                {
+                    <ul>
+                        @GetTreeView(category, item.Id)
+                        //recursive call for populate sub items here
+                    </ul>
+                }
+        </li>
+    }
+}
+<li><a href="/Home/Product">TÜM ÜRÜNLER</a></li>
+
+@foreach (var item in Model.Where(x => x.ParentId == 0).ToList())
+{
+    string categoryUrl = $"/Home/ProductList?categoryId={item.ParentId}&subCategoryId={item.Id}";
+    <li>
+        <a href=@categoryUrl>@item.Name </a>
+        <ul>
+
+            @GetTreeView(catList, item.Id)
+        </ul>
+    </li>
+}
+
+
+
+

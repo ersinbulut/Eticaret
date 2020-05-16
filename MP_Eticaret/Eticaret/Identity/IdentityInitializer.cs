@@ -39,6 +39,17 @@ namespace Eticaret.Identity
                 manager.AddToRole(user.Id, "user");
             }
 
+            if (!context.Users.Any(i => i.Name == "enesasik"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+
+                var user = new ApplicationUser() { Name = "enes", Surname = "asik", Email = "enes@gmail.com", UserName = "enesasik" };
+                manager.Create(user, "123456");
+                manager.AddToRole(user.Id, "admin");
+                manager.AddToRole(user.Id, "user");
+            }
+
             if (!context.Users.Any(i => i.Name == "kamilbulut"))
             {
                 var store = new UserStore<ApplicationUser>(context);

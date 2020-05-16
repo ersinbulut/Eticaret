@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Eticaret.Entity.Comments>
+
+@{
+    ViewBag.Title = "OnayliYorum";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Ürün Adı</th>
+                            @*<th>Yorum</th>*@
+                            <th>Kullanıcı</th>
+                            <th>Eklenme Tarihi</th>
+                            <th>Onay</th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                @*<td style="width:319px;">
+                                    @Html.DisplayFor(modelItem => item.Yorum)
+                                </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AddedDate)
+                                </td>
+                                <td>
+                                    @Html.CheckBoxFor(modelItem => item.IsApproved)
+                                </td>
+                                <td>
+                                    @*<a class="btn btn-primary btn-sm" href="@Url.Action("Edit",new { id = item.Id })"><i class="fa fa-fw fa-edit"></i>Düzenle</a>*@
+                                    <a class="btn btn-danger btn-sm" href="@Url.Action("Delete",new { id = item.Id })"><i class="fa fa-fw fa-trash-o"></i>Sil</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Ürün Adı</th>
+                            @*<th>Yorum</th>*@
+                            <th>Kullanıcı</th>
+                            <th>Eklenme Tarihi</th>
+                            <th>Onay</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div>

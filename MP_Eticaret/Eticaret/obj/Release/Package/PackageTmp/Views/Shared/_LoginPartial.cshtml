@@ -1,0 +1,102 @@
+﻿
+<style>
+    .dropdown:hover > .dropdown-menu {
+        display: block;
+        padding-top: 10px;
+    }
+
+    .navbar-nav > .user-menu > .dropdown-menu > li.user-header {
+        width: 220px;
+    }
+
+    .navbar-nav > .user-menu > .dropdown-menu {
+        margin-top: -10px;
+    }
+    }
+</style>
+<ul id="topMenu" class="nav navbar-nav" style="float:right;">
+    @if (Request.IsAuthenticated)//true ise kullanıcı login olmuş demek
+    {
+        if (this.User.IsInRole("admin"))//kullanıcı rolü admin ise
+        {
+            <li class=""><a href="/AdminHome/Index" target="_blank">Admin Paneli</a></li>
+
+            <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="~/Content/Images/user.png" style="background-color:white;" width="20" height="20" class="user-image" alt="User Image" />
+                    <span class="hidden-xs">Hesabım</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <!-- User image -->
+                    <li class="user-header" style="padding:5px; background-color:#3A3F44;">
+                        <img src="~/Content/Images/user.png" style="background-color:white;" width="50" height="50" class="img-circle" alt="User Image" />
+                        <p style="float:right; margin-right:30px; font-size:30px; margin-top:15px; color:white;">
+                            @this.User.Identity.Name
+                        </p>
+                    </li>
+                    <!-- Menu Body -->
+                    <li class="user-body">
+                    <li class="col-xs-4 text-center">
+                        <a href="/Account/UserProfile">Profilim</a>
+                    </li>
+                    <li class="col-xs-4 text-center">
+                        <a href="/Account/Index">Siparişlerim</a>
+                    </li>
+                    <li class="col-xs-4 text-center">
+                        <a href="/Account/AddressList">Adreslerim</a>
+                    </li>
+                    <li class="col-xs-4 text-center">
+                        <a href="/Account/PayList">Ödeme Yöntemlerim</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="/Account/Logout" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-danger">Çıkış</span></a>
+
+            </li>
+        }
+        else
+        {
+            <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="~/Content/Images/user.png" style="background-color:white;" width="20" height="20" class="user-image" alt="User Image" />
+                    <span class="hidden-xs">Hesabım</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <!-- User image -->
+                    <li class="user-header" style="padding:5px; background-color:#3A3F44;">
+                        <img src="~/Content/Images/user.png" style="background-color:white;" width="50" height="50" class="img-circle" alt="User Image" />
+                        <p style="float:right; margin-right:30px; font-size:30px; margin-top:15px; color:white;">
+                            @this.User.Identity.Name
+                        </p>
+                    </li>
+                    <!-- Menu Body -->
+                    <li class="user-body">
+                    <li class="col-xs-4 text-center">
+                        <a href="/Account/UserProfile">Profilim</a>
+                    </li>
+                    <li class="col-xs-4 text-center">
+                        <a href="/Account/Index">Siparişlerim</a>
+                    </li>
+                    <li class="col-xs-4 text-center">
+                            <a href="/Account/AddressList">Adreslerim</a>
+                        </li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="/Account/Logout" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-danger">Çıkış</span></a>
+
+            </li>
+        }
+    }
+    else
+    {
+        <li class=""><a href="/Home/Contact">İletişim</a></li>
+        <li class=""><a href="/Account/Register">Üye Ol</a></li>
+        <li class="">
+            <a href="/Account/Login" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success">Giriş</span></a>
+
+        </li>
+    }
+</ul>

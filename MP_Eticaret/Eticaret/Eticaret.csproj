@@ -1036,6 +1036,7 @@
     <Content Include="AdminLTE\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="AdminLTE\plugins\input-mask\phone-codes\phone-codes.json" />
     <Content Include="AdminLTE\README.md" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
